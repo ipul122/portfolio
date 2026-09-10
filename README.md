@@ -17,8 +17,11 @@ Personal portfolio website for Anwar Udin Sayfulloh, an AI/ML Engineer focused o
 ```text
 portfolio-anwar/
 ├── index.html
+├── cv/
+│   └── CV_Anwar_Udin_Sayfulloh_AI_Engineer.pdf
 ├── css/
-│   └── style.css
+│   ├── style.css
+│   └── CV_Anwar_Udin_Sayfulloh_AI_Engineer_ATS.pdf
 ├── js/
 │   └── main.js
 └── assets/
