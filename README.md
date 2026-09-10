@@ -33,15 +33,6 @@ portfolio-anwar/
         └── machine-learning/
 ```
 
-## Run Locally
-
-This is a static website and does not require a build step or package installation.
-
-1. Clone the repository.
-2. Open `index.html` in a browser.
-
-For the best local development experience, use the VS Code Live Server extension.
-
 ## Featured Work
 
 - Gold Deposit Mapping Probability
