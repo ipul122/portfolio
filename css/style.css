@@ -203,13 +203,13 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 1.8rem;
+    gap: 1.15rem;
 }
 
 .nav-link {
     color: var(--text-secondary);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 500;
     transition: var(--transition);
     position: relative;
@@ -771,6 +771,22 @@ body {
     border: 1px solid var(--border);
     border-radius: 10px;
     margin-bottom: 1.2rem;
+}
+
+.certification-card {
+    background: linear-gradient(145deg, var(--bg-card), #18243a);
+}
+
+.certification-image-link {
+    display: block;
+    cursor: zoom-in;
+}
+
+.certification-image {
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    background: #fff;
+    padding: 0.35rem;
 }
 
 .project-card h3 {
