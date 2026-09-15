@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ipul122.github.io/portfolio/sitemap.xml

@@ -1,5 +1,7 @@
 # Anwar Udin Sayfulloh - Portfolio
 
+🔗 **Live site:** https://ipul122.github.io/portfolio/
+
 Personal portfolio website for Anwar Udin Sayfulloh, an AI/ML Engineer focused on machine learning, deep learning, data analytics, MLOps, and geoscience applications.
 
 ## Highlights
@@ -11,6 +13,8 @@ Personal portfolio website for Anwar Udin Sayfulloh, an AI/ML Engineer focused o
 - Project filtering by Machine Learning, LLMs/NLP, Data Analytics, Geophysics, and Computer Vision
 - Local project images organized by category
 - Responsive layout with animated sections and project cards
+- SEO-ready: Open Graph / Twitter preview card, schema.org Person structured data, `robots.txt` and `sitemap.xml`
+- Accessible fallback: content stays visible with JavaScript disabled (`<noscript>` guard for the preloader and scroll-reveal)
 
 ## Project Structure
 

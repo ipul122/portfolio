@@ -5,12 +5,23 @@
    ============================================ */
 
 // ===== 1. PRELOADER =====
-window.addEventListener('load', () => {
+// Dulu: menunggu window.load (termasuk font/CDN) + 1.8 detik, sehingga hero
+// tertutup sampai ~3-4 detik. Sekarang: dihitung dari DOMContentLoaded,
+// di-skip bila pengguna memilih reduced motion, dan selalu ada failsafe.
+(() => {
     const preloader = document.getElementById('preloader');
-    setTimeout(() => {
-        preloader.classList.add('hidden');
-    }, 1800); // tampil 1.8 detik
-});
+    if (!preloader) return;
+
+    const hidePreloader = () => preloader.classList.add('hidden');
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        hidePreloader();
+        return;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => setTimeout(hidePreloader, 400));
+    setTimeout(hidePreloader, 1500); // failsafe: jangan pernah memblokir lebih dari 1.5 detik
+})();
 
 // ===== 2. NAVBAR: scroll effect & active link =====
 const navbar = document.getElementById('navbar');
