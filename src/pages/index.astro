@@ -1,0 +1,199 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import SecHead from '../components/SecHead.astro';
+import { profile, tools, stats, experience, skills, education } from '../data/profile';
+import { projects, filters, leadership, certifications } from '../data/projects';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const marquee = [...tools, ...tools];
+---
+<Base>
+  <section class="hero" id="top">
+    <div class="wrap">
+      <p class="mono muted" data-reveal>{profile.role} — {profile.location}</p>
+      <h1>
+        <span class="line"><span>Anwar Udin</span></span>
+        <span class="line"><span><em>Sayfulloh</em></span></span>
+      </h1>
+      <div class="hero-foot">
+        <p class="hero-lede" data-reveal>
+          I build end-to-end machine learning systems — from raw data to a model people can use.
+          My background is geophysics, so I'm happiest where AI meets real, messy field data.
+        </p>
+        <div class="cta" data-reveal>
+          <a class="btn solid" href="#projects">View projects</a>
+          <a class="btn" href={`${base}/${profile.cv}`} download>Download CV</a>
+        </div>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        {marquee.map((t) => <span class="mono">{t}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="about">
+    <div class="wrap">
+      <SecHead id="about" num="01" label="About" title="Data, models, and the ground beneath." />
+      <div class="about">
+        <p class="big" data-reveal>
+          AI-focused engineer with hands-on experience in Python, data analysis, machine learning and deep learning.
+        </p>
+        <div data-reveal>
+          <p>
+            I build end-to-end AI solutions: data preprocessing, feature engineering, model development,
+            evaluation, optimization and deployment.
+          </p>
+          <p>
+            The focus is practical, scalable systems that turn complex datasets into reliable, data-driven decisions.
+          </p>
+          <div class="stats">
+            {stats.map((s) => (
+              <div class="stat">
+                <b>{s.text ?? <><span data-count={s.value}>{s.value}</span>{s.suffix}</>}</b>
+                <span class="mono muted">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="experience">
+    <div class="wrap">
+      <SecHead id="experience" num="02" label="Experience" title="Where I've worked." />
+      <div class="tl">
+        <div class="tl-line" aria-hidden="true"></div>
+        {experience.map((j) => (
+          <article class="job" data-reveal>
+            <p class="mono muted">{j.date}</p>
+            <div>
+              <h3>{j.role}</h3>
+              <p class="muted">{j.org}</p>
+              <ul>{j.points.map((p) => <li>{p}</li>)}</ul>
+              <div class="tags">{j.tags.map((t) => <span>{t}</span>)}</div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="projects">
+    <div class="wrap">
+      <SecHead id="projects" num="03" label="Selected work" title="Projects." />
+      <div class="filters" role="group" aria-label="Filter projects" data-reveal>
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        {filters.map((f) => <button type="button" data-filter={f.id} aria-pressed="false">{f.label}</button>)}
+      </div>
+      <p class="sr-only" id="filter-status" role="status" aria-live="polite"></p>
+      <div id="proj-list">
+        {projects.map((p, i) => (
+          <article class="proj" data-cat={p.category}>
+            <div class="proj-row">
+              <span class="mono muted">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+                <div class="links">
+                  {p.links.map((l) => <a href={l.href} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>)}
+                </div>
+              </div>
+              <div class="tags">{[p.kind, ...p.tags].map((t) => <span>{t}</span>)}</div>
+            </div>
+            <figure class="proj-fig">
+              <Image src={p.img} alt={p.alt} widths={[352, 704, 1100]} sizes="(min-width: 861px) 22rem, 100vw" loading="lazy" />
+            </figure>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="research">
+    <div class="wrap">
+      <SecHead id="research" num="04" label="Leadership & publications" title="Research & leadership." />
+      <div class="duo">
+        {leadership.map((l) => (
+          <article class="card" data-reveal>
+            <p class="mono muted">{l.kind}</p>
+            <h3>{l.title}</h3>
+            <p>{l.desc}</p>
+            <div class="links">
+              {l.links.map((k) => <a href={k.href} target="_blank" rel="noopener noreferrer">{k.label} ↗</a>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="certifications">
+    <div class="wrap">
+      <SecHead id="certifications" num="05" label="Certifications" title="Certificates." />
+      <div class="certs">
+        {certifications.map((c) => (
+          <article class="cert" data-reveal>
+            <a class="img" href={c.img.src} target="_blank" rel="noopener noreferrer" aria-label={`View ${c.title} certificate (opens in new tab)`}>
+              <Image src={c.img} alt={c.alt} widths={[320, 640]} sizes="(min-width: 700px) 17rem, 100vw" loading="lazy" />
+            </a>
+            <h3>{c.title}</h3>
+            <p class="mono muted">{c.issuer}</p>
+            <p class="muted">{c.meta}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="skills">
+    <div class="wrap">
+      <SecHead id="skills" num="06" label="Technical skills" title="Skills." />
+      <div class="rows" data-reveal>
+        {skills.map((s) => (
+          <div>
+            <h3>{s.group}</h3>
+            <p class="chips">{s.items.map((i) => <span>{i}</span>)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="education">
+    <div class="wrap">
+      <SecHead id="education" num="07" label="Education & fieldwork" title="Education." />
+      <div class="rows">
+        {education.map((e) => (
+          <div data-reveal>
+            <h3>{e.date}</h3>
+            <div>
+              <p class="big">{e.title}</p>
+              <p>{e.sub}</p>
+              <p>{e.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="contact">
+    <div class="wrap">
+      <SecHead id="contact" num="08" label="Contact" title="Let's work together." />
+      <p class="muted" data-reveal style="max-width:38rem;margin-bottom:2rem">
+        Open to AI engineering opportunities, geoscience collaborations and research discussions.
+      </p>
+      <a class="contact-mail" data-reveal href={`mailto:${profile.email}?subject=Portfolio%20Inquiry`}>{profile.email}</a>
+      <div class="contact-meta" data-reveal>
+        <a href={profile.whatsapp.href} target="_blank" rel="noopener noreferrer">WhatsApp — {profile.whatsapp.label}</a>
+        <span class="muted">{profile.location}</span>
+        {profile.socials.map((s) => <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label} ↗</a>)}
+      </div>
+    </div>
+  </section>
+</Base>
+

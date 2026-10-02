@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+*.log
+legacy/
+AUDIT.md
+test.md
+test copy.md
+test.py
+_scrape_kompas.py
+_gen_assets.py

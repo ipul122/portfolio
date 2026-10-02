@@ -1,0 +1,11 @@
+---
+interface Props { id: string; num: string; label: string; title: string }
+const { id, num, label, title } = Astro.props;
+---
+<div class="sec-head" data-reveal>
+  <span class="mono muted">{num}</span>
+  <span class="mono muted">{label}</span>
+</div>
+<h2 class="sec-title" id={id} data-title>
+  {title.split(' ').map((w, i, a) => (<><span class="w"><span>{w}</span></span>{i < a.length - 1 ? ' ' : ''}</>))}
+</h2>
