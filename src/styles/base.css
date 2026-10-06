@@ -9,13 +9,14 @@
 :root,
 [data-theme='dark'] {
   color-scheme: dark;
-  --bg: #13110f;
-  --bg2: #1a1714;
-  --fg: #ece6da;
-  --muted: #9d9588;
-  --line: rgba(236, 230, 218, 0.14);
-  --accent: #e8704a;
-  --on-accent: #13110f;
+  --bg: #0b0d16;
+  --bg2: #121522;
+  --fg: #e9e7e2;
+  --muted: #9a97a8;
+  --line: rgba(233, 231, 226, 0.13);
+  --accent: #d9a45b;
+  --on-accent: #0b0d16;
+  --glow: rgba(96, 120, 190, 0.16);
 }
 [data-theme='light'] {
   color-scheme: light;
@@ -24,8 +25,9 @@
   --fg: #1a1714;
   --muted: #5f584e;
   --line: rgba(26, 23, 20, 0.16);
-  --accent: #b8401b;
+  --accent: #8a6a2f;
   --on-accent: #f4f0e8;
+  --glow: rgba(120, 140, 200, 0.12);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -47,6 +49,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 ::selection { background: var(--accent); color: var(--on-accent); }
 [hidden] { display: none !important; }
+* { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -106,9 +111,27 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- hero ---------- */
 .hero {
+  position: relative; isolation: isolate; overflow: clip;
   min-height: 100svh; padding-top: calc(var(--nav-h) + 3rem); padding-bottom: 2.5rem;
   display: flex; flex-direction: column; justify-content: space-between; gap: 4rem;
 }
+.hero .wrap, .hero .marquee { position: relative; z-index: 1; }
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(58% 42% at 50% 26%, var(--glow), transparent 70%);
+}
+#stars {
+  position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; pointer-events: none;
+}
+
+/* ---------- grain ---------- */
+.grain {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+[data-theme='light'] .grain { opacity: 0.06; mix-blend-mode: multiply; }
 .hero h1 {
   font: 400 clamp(3.4rem, 12.5vw, 11rem)/0.92 var(--serif);
   letter-spacing: -0.025em; margin-block: 1.5rem 2rem;
@@ -124,7 +147,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .marquee-track { display: flex; width: max-content; animation: slide 40s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .marquee span { padding-right: 2.5rem; white-space: nowrap; }
-.marquee span::after { content: '/'; margin-left: 2.5rem; color: var(--accent); }
+.marquee span::after { content: '·'; margin-left: 2.5rem; color: var(--accent); }
 @keyframes slide { to { transform: translateX(-50%); } }
 
 @media (prefers-reduced-motion: reduce) {

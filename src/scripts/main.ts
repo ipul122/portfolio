@@ -133,3 +133,56 @@ if (!calm) {
       lenis.scrollTo(t as HTMLElement, { offset: -90 });
     }));
 }
+
+/* ---------- starfield (hero only) ---------- */
+const canvas = $<HTMLCanvasElement>('#stars');
+if (canvas) {
+  const ctx = canvas.getContext('2d')!;
+  const host = canvas.parentElement as HTMLElement;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const rnd = (a: number, b: number) => a + Math.random() * (b - a);
+  const stars = Array.from({ length: 130 }, () => ({
+    x: Math.random(), y: Math.random(), r: rnd(0.4, 1.3),
+    a: rnd(0.2, 0.85), sp: rnd(0.35, 1.6), ph: rnd(0, Math.PI * 2), depth: rnd(0.05, 0.4),
+  }));
+  let w = 0, h = 0, visible = true;
+  const fit = () => {
+    w = host.clientWidth; h = host.clientHeight;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  fit();
+  addEventListener('resize', fit, { passive: true });
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(host);
+
+  const draw = (time: number) => {
+    const light = document.documentElement.dataset.theme === 'light';
+    const cCommon = light ? '92, 104, 142' : '215, 220, 239';
+    const cAccent = light ? '138, 106, 47' : '217, 164, 91';
+    const drift = Math.min(scrollY, h) * 0.15;
+    ctx.globalAlpha = 1;
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const tw = calm ? 1 : 0.6 + 0.4 * Math.sin(time * 0.0011 * s.sp + s.ph);
+      ctx.fillStyle = `rgb(${s.sp > 1.15 ? cAccent : cCommon})`;
+      ctx.globalAlpha = s.a * tw;
+      ctx.beginPath();
+      ctx.arc(s.x * w, s.y * h + drift * s.depth, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  if (calm) {
+    draw(0);
+    document.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('#theme-btn')) requestAnimationFrame(() => draw(0));
+    });
+  } else {
+    const loop = (t: number) => {
+      if (visible) draw(t);
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+}
