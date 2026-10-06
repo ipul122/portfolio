@@ -29,6 +29,19 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 .job li::before { content: '–'; position: absolute; left: 0; color: var(--accent); }
 .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
 .tags span { border: 1px solid var(--line); border-radius: 99px; padding: 0.2rem 0.7rem; font: 500 0.75rem/1.5 var(--mono); }
+.proj-row .tags { align-content: flex-start; }
+.proj-row .tags span {
+  width: clamp(4.5rem, 7vw, 5.75rem);
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
 @media (max-width: 800px) { .job { grid-template-columns: 1fr; } }
 
 /* projects */
@@ -76,7 +89,20 @@ section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 .rows h3 { font: 500 0.78rem/1.6 var(--mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
 .rows .big { font: 400 1.6rem/1.2 var(--serif); }
 .rows p + p { color: var(--muted); margin-top: 0.5rem; }
-.chips { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; }
+.chips span {
+  width: clamp(5rem, 8vw, 6.5rem);
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  text-align: center;
+  font: 500 0.72rem/1.25 var(--mono);
+  overflow-wrap: anywhere;
+}
 @media (max-width: 800px) { .rows > div { grid-template-columns: 1fr; } }
 
 /* contact / footer */
